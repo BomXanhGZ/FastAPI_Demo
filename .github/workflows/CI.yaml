@@ -3,9 +3,7 @@ name: Run Unit Tests
 on:
   push:
     paths:
-      - app/**.py
-      - Test/unit-test/**.py
-      - "!Test/rest-test/**"
+      - "**"
     branches: 
       - main
       - "*"
