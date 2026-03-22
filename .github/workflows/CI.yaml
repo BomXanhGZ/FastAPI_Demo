@@ -5,8 +5,16 @@ on:
     paths:
       - "**"
     branches: 
+      - "release/**"
+      - "hotfix/**"
+      - "feature/**"
+  pull_request:
+    paths:
+      - "**"
+    branches: 
       - main
-      - "*"
+      - staging
+      - develop
 
 jobs:
   Test:
