@@ -6,7 +6,7 @@ load_dotenv()
 
 class Settings:
     SECRET_KEY: str = os.getenv(
-        "SECRET_KEY", "your-super-secret-key-change-me")
+        "SECRET_KEY", "aB3xK9mP2vL7qR5n")
     ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
 

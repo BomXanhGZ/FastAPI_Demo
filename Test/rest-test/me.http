@@ -1,0 +1,7 @@
+@baseUrl = http://127.0.0.1:8000
+# Sau khi login thành công ở file login.http, hãy copy access_token và dán vào đây
+@authToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ0ZXN0dXNlcjEiLCJleHAiOjE3NzM5NTQ5NDJ9.mvXnzGOXLeupr-ZAyxPyuPea4DpAM6Vm3Hhd1N8Wueg
+
+### Lấy thông tin User hiện tại (Me)
+GET {{baseUrl}}/me
+Authorization: Bearer {{authToken}}
