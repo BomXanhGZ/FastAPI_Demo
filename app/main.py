@@ -17,3 +17,5 @@ app.include_router(auth.router, tags=["Authentication"])
 @app.get("/")
 def read_root():
     return {"message": "Welcome to the Login Demo API. Go to /docs for Swagger UI."}
+
+#
