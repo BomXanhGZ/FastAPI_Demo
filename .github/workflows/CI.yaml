@@ -11,13 +11,13 @@ on:
   #     - "release/**"
   #     - "hotfix/**"
   #     - "feature/**"
-  pull_request:
-    paths:
-      - "**"
-    branches: 
-      - main
-      - staging
-      - develop
+  # pull_request:
+  #   paths:
+  #     - "**"
+  #   branches: 
+  #     - main
+  #     - staging
+  #     - develop
 
 jobs:
   Test:
