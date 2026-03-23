@@ -1,14 +1,16 @@
 name: Run Unit Tests
 
 on:
-  push:
-    paths:
-      - "**"
-    branches: 
-      - main
-      - "release/**"
-      - "hotfix/**"
-      - "feature/**"
+  workflow_dispatch:
+
+  # push:
+  #   paths:
+  #     - "**"
+  #   branches: 
+  #     - main
+  #     - "release/**"
+  #     - "hotfix/**"
+  #     - "feature/**"
   pull_request:
     paths:
       - "**"
