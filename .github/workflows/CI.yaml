@@ -46,4 +46,5 @@ jobs:
 
       - name: Run tests
         run: |
-          pytest -q
+          pytest --cov=src --cov-report=xml
+
