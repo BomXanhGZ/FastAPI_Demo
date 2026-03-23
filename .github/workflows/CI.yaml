@@ -3,21 +3,21 @@ name: Run Unit Tests
 on:
   workflow_dispatch:
 
-  # push:
-  #   paths:
-  #     - "**"
-  #   branches: 
-  #     - main
-  #     - "release/**"
-  #     - "hotfix/**"
-  #     - "feature/**"
-  # pull_request:
-  #   paths:
-  #     - "**"
-  #   branches: 
-  #     - main
-  #     - staging
-  #     - develop
+  push:
+    paths:
+      - "**"
+    branches: 
+      - main
+      - "release/**"
+      - "hotfix/**"
+      - "feature/**"
+  pull_request:
+    paths:
+      - "**"
+    branches: 
+      - main
+      - staging
+      - develop
 
 jobs:
   Test:
