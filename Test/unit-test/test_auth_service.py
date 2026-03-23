@@ -114,3 +114,25 @@ class TestAuthService:
             AuthService.get_current_user("invalid", mock_db)
 
         assert excinfo.value.status_code == status.HTTP_401_UNAUTHORIZED
+
+    @patch("app.services.auth.decode_access_token")
+    def test_get_current_user_no_username(self, mock_decode, mock_db):
+        """Test token valid nhưng không có sub (username) -> Lỗi 401"""
+        mock_decode.return_value = {
+            "other": "data"}  # Truthy but no "sub" field
+
+        with pytest.raises(HTTPException) as excinfo:
+            AuthService.get_current_user("token_no_sub", mock_db)
+
+        assert excinfo.value.status_code == status.HTTP_401_UNAUTHORIZED
+
+    @patch("app.services.auth.decode_access_token")
+    def test_get_current_user_not_found(self, mock_decode, mock_db):
+        """Test token valid nhưng user không tồn tại trong DB -> Lỗi 401"""
+        mock_decode.return_value = {"sub": "non_existent_user"}
+        mock_db.query.return_value.filter.return_value.first.return_value = None
+
+        with pytest.raises(HTTPException) as excinfo:
+            AuthService.get_current_user("valid_token_but_no_user", mock_db)
+
+        assert excinfo.value.status_code == status.HTTP_401_UNAUTHORIZED

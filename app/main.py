@@ -3,10 +3,15 @@ from app.database import engine, Base
 from app.controllers import auth
 from app.core.middleware import init_middlewares
 
-# Create database tables
-Base.metadata.create_all(bind=engine)
-
 app = FastAPI(title="Login Demo API")
+
+# Create database tables on startup
+
+
+@app.on_event("startup")
+def on_startup():
+    Base.metadata.create_all(bind=engine)
+
 
 # Initialize middlewares
 init_middlewares(app)

@@ -34,6 +34,20 @@ uvicorn app.main:app --reload
 - Swagger UI: http://127.0.0.1:8000/docs
 - Redoc: http://127.0.0.1:8000/redoc
 
+## Chạy Test
+
+Sử dụng `pytest` để chạy các unit test. Để đảm bảo Python tìm thấy module `app`, hãy chạy bằng lệnh `python -m pytest`:
+
+- Chạy toàn bộ unit test:
+  ```bash
+  python -m pytest Test/unit-test/
+  ```
+
+- Chạy và kiểm tra độ bao phủ của Service:
+  ```bash
+  python -m pytest --cov=app/services Test/unit-test/
+  ```
+
 ## Ghi chú
 
 - App tự tạo bảng khi khởi động (xem `app/main.py`).
