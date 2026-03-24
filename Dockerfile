@@ -1,17 +1,19 @@
 FROM python:3.13-slim
 
-# Cài đặt các thư viện cần thiết cho MySQL (mysqlclient)
+# Install system dependencies only if needed for standard wheels
 RUN apt-get update && apt-get install -y \
-    gcc \
-    default-libmysqlclient-dev \
-    pkg-config \
-    && apt-get clean
+    curl \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 
+# Copy requirements first to leverage Docker cache
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
+# Copy the rest of the application
 COPY . .
 
+# Expose port and start the app
+EXPOSE 8000
 CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]

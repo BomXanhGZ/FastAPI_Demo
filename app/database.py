@@ -1,7 +1,7 @@
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine
-from app.config import settings
+import app.settings as settings
 
 # Kết nối linh hoạt dựa trên DATABASE_URL
 SQLALCHEMY_DATABASE_URL = settings.DATABASE_URL

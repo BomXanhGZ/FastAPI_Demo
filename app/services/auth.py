@@ -2,7 +2,7 @@ from datetime import timedelta
 from sqlalchemy.orm import Session
 from fastapi import HTTPException, status, Depends
 from fastapi.security import OAuth2PasswordBearer
-from app.config import settings
+import app.settings as settings
 from app.models.user import User
 from app.database import get_db
 from app.utils.auth import (
