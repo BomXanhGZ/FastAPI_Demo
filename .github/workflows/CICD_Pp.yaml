@@ -1,6 +1,17 @@
 name: Run Unit Tests
 
 on:
+  push:
+    branches: 
+      - main
+      - "release/**"
+      - "hotfix/**"
+      - "feature/**"
+  pull_request:
+    branches: 
+      - main
+      - staging
+      - develop
   workflow_dispatch:
 
 jobs:
@@ -39,3 +50,16 @@ jobs:
 
       - name: Run tests
         run: pytest --cov=app --cov-report=xml
+
+
+  Deploy:
+    needs: Test
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - name: Trigger Render Deploy
+        run: |
+          curl -X POST \
+            -H "Accept: application/json" \
+            -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" \
+            https://api.render.com/v1/services/${{ secrets.RENDER_SERVICE_ID }}/deploys
