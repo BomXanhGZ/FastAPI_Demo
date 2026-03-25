@@ -1,7 +1,7 @@
 import pytest
 from unittest.mock import MagicMock, patch
 from fastapi import HTTPException, status
-from app.services.auth import AuthService
+from app.services.auth import register_user, login_user, get_current_user
 # Giả định class User có sẵn từ app.models.user như trong code service
 from app.models.user import User
 
@@ -26,7 +26,7 @@ class TestAuthService:
         mock_hash.return_value = hashed
 
         # Act
-        new_user = AuthService.register_user(mock_db, username, password)
+        new_user = register_user(mock_db, username, password)
 
         # Assert
         assert new_user.username == username
@@ -46,7 +46,7 @@ class TestAuthService:
 
         # Act & Assert
         with pytest.raises(HTTPException) as excinfo:
-            AuthService.register_user(mock_db, username, "password")
+            register_user(mock_db, username, "password")
 
         assert excinfo.value.status_code == status.HTTP_400_BAD_REQUEST
         assert excinfo.value.detail == "Username already registered"
@@ -68,7 +68,7 @@ class TestAuthService:
         mock_settings.ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
         # Act
-        result = AuthService.login_user(mock_db, username, password)
+        result = login_user(mock_db, username, password)
 
         # Assert
         assert result["access_token"] == "access_token_abc"
@@ -84,7 +84,7 @@ class TestAuthService:
 
         # Act & Assert
         with pytest.raises(HTTPException) as excinfo:
-            AuthService.login_user(mock_db, "user", "wrong_pass")
+            login_user(mock_db, "user", "wrong_pass")
 
         assert excinfo.value.status_code == status.HTTP_401_UNAUTHORIZED
 
@@ -100,7 +100,7 @@ class TestAuthService:
         mock_db.query.return_value.filter.return_value.first.return_value = user
 
         # Act
-        result = AuthService.get_current_user(token, mock_db)
+        result = get_current_user(token, mock_db)
 
         # Assert
         assert result == user
@@ -111,7 +111,7 @@ class TestAuthService:
         mock_decode.return_value = None
 
         with pytest.raises(HTTPException) as excinfo:
-            AuthService.get_current_user("invalid", mock_db)
+            get_current_user("invalid", mock_db)
 
         assert excinfo.value.status_code == status.HTTP_401_UNAUTHORIZED
 
@@ -122,7 +122,7 @@ class TestAuthService:
             "other": "data"}  # Truthy but no "sub" field
 
         with pytest.raises(HTTPException) as excinfo:
-            AuthService.get_current_user("token_no_sub", mock_db)
+            get_current_user("token_no_sub", mock_db)
 
         assert excinfo.value.status_code == status.HTTP_401_UNAUTHORIZED
 
@@ -133,6 +133,6 @@ class TestAuthService:
         mock_db.query.return_value.filter.return_value.first.return_value = None
 
         with pytest.raises(HTTPException) as excinfo:
-            AuthService.get_current_user("valid_token_but_no_user", mock_db)
+            get_current_user("valid_token_but_no_user", mock_db)
 
         assert excinfo.value.status_code == status.HTTP_401_UNAUTHORIZED
