@@ -16,14 +16,17 @@ ALGORITHM: str = os.getenv("ALGORITHM", "HS256")
 ACCESS_TOKEN_EXPIRE_MINUTES: int = int(
     os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES", 30))
 
-# --- PostgreSQL Configuration ---
-DB_SERVER = "dpg-d710ph75gffc73fepm3g-a.oregon-postgres.render.com"
-DB_NAME = "test_icj7"
-DB_USER = "testuser"
-DB_PASSWORD = "joDTyAHRi37e2LVLWOTi7q1CjeBqBkQw"
-DB_PORT = "5432"
+# --- Database Configuration ---
+DB_PORT = os.getenv("DB_PORT", "5432")
+DB_USER = os.getenv("DB_USER", "fastapi_user")
+DB_PASSWORD = os.getenv("DB_PASSWORD", "x=rfJ42|k(8<BVfz")
+DB_NAME = os.getenv("DB_NAME", "fastapi_db")
+INSTANCE_CONNECTION_NAME = os.getenv(
+    "INSTANCE_CONNECTION_NAME", "spheric-algebra-494403-k4:asia-northeast1:fastapi-postgres")
 
-DATABASE_URL = (
-    f"postgresql://{DB_USER}:{DB_PASSWORD}"
-    f"@{DB_SERVER}:{DB_PORT}/{DB_NAME}?sslmode=require"
+DEFAULT_POSTGRES_URL = (
+    f"postgresql+psycopg2://{DB_USER}:{DB_PASSWORD}@/{DB_NAME}"
+    f"?host=/cloudsql/{INSTANCE_CONNECTION_NAME}"
 )
+
+DATABASE_URL = os.getenv("DATABASE_URL", DEFAULT_POSTGRES_URL)

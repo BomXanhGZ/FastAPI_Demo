@@ -1,0 +1,41 @@
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv/
+.env
+
+# pytest cache
+.pytest_cache/
+pytest-cache-files-*/
+Test/
+
+# build files
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# logs
+*.log
+
+# git
+.git/
+.gitignore
+
+# docker
+.dockerignore
