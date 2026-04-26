@@ -1,5 +1,6 @@
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
+from sqlalchemy.pool import StaticPool
 from sqlalchemy import create_engine
 import app.settings as settings
 
@@ -7,7 +8,13 @@ import app.settings as settings
 SQLALCHEMY_DATABASE_URL = settings.DATABASE_URL
 
 # Đối với SQLite cần thêm connect_args, đối với SQL Server thì không cần
-if SQLALCHEMY_DATABASE_URL.startswith("sqlite"):
+if SQLALCHEMY_DATABASE_URL in ("sqlite://", "sqlite:///:memory:"):
+    engine = create_engine(
+        SQLALCHEMY_DATABASE_URL,
+        connect_args={"check_same_thread": False},
+        poolclass=StaticPool,
+    )
+elif SQLALCHEMY_DATABASE_URL.startswith("sqlite"):
     engine = create_engine(
         SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False}
     )

@@ -21,6 +21,10 @@ env/
 
 # Logs
 *.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+node_modules/
 
 # Test / coverage
 .pytest_cache/
@@ -41,6 +45,7 @@ htmlcov/
 # Local databases
 *.sqlite3
 *.db
+*.db-journal
 
 # IDE/editor
 .idea/
@@ -55,3 +60,5 @@ Desktop.ini
 
 # Docker
 *.pid
+
+AGENTS.md
